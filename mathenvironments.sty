@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{mathEnvironments}[2017/07/06 math environments v0.1]
+\ProvidesPackage{mathenvironments}[2017/07/06 math environments v0.1]
 
 \RequirePackage{tcolorbox}
 \tcbuselibrary{many}
@@ -8,7 +8,7 @@
 \RequirePackage[titles]{tocloft}
 
 % init list of math for definitions and theorems
-\newcommand{\listofmathcall}{Verzeichnis der Definitionen und Sätze}
+\providecommand{\listofmathcall}{Verzeichnis der Definitionen und Sätze}
 \newlistof{math}{mathlist}{\listofmathcall}
 % add parentheses around argument
 \newcommand{\parent}[1]{ \ifx&#1&\else (#1) \fi }
