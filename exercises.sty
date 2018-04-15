@@ -17,10 +17,22 @@
   \bigskip\par%
   {
     \large%
-    \textbf{\pgfkeysvalueof{/exercise/call}}%
+    \textbf{%
+      \pgfkeysifdefined{/exercise/local/call}{%
+        \pgfkeysvalueof{/exercise/local/call}%
+      }{%
+        \pgfkeysvalueof{/exercise/call}%
+      }%
+    }%
   }
   \qquad%
-  \textit{\pgfkeysvalueof{/exercise/title}}%
+  \textit{%
+    \pgfkeysifdefined{/exercise/local/title}{%
+      \pgfkeysvalueof{/exercise/local/title}%
+    }{%
+      \pgfkeysvalueof{/exercise/title}%
+    }%
+  }%
   \hfill
   \marginnote{\pgfkeysvalueof{/exercise/points}}%
   \par\medskip
