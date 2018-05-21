@@ -2,30 +2,38 @@
 \ProvidesPackage{exercises}[2017/07/06 exercises and solutions v0.1]
 
 \RequirePackage{pgfkeys}
+\RequirePackage{etoolbox}
+\RequirePackage{import}
 \RequirePackage{marginnote}
+
+\pgfkeys{%
+  /exercise/.style = /exercise/.cd,
+  /exercise/local/.style = /exercise/local/.cd
+}
 
 \newenvironment{exercise}[1][]{%
   \pgfkeys{%
-    /exercise/.style = /exercise/.cd,
     exercise,
-    call/.initial = Aufgabe,
+    type/.initial = Aufgabe,
     title/.initial =,
-    points/.initial =,
+    points/.style = {points/.initial = ##1},
     #1
   }%
   \setlength\parindent{0mm}
   \bigskip\par%
+  % print exercise type
   {
     \large%
     \textbf{%
-      \pgfkeysifdefined{/exercise/local/call}{%
-        \pgfkeysvalueof{/exercise/local/call}%
+      \pgfkeysifdefined{/exercise/local/type}{%
+        \pgfkeysvalueof{/exercise/local/type}%
       }{%
-        \pgfkeysvalueof{/exercise/call}%
+        \pgfkeysvalueof{/exercise/type}%
       }%
     }%
   }
   \qquad%
+  % print exercise title
   \textit{%
     \pgfkeysifdefined{/exercise/local/title}{%
       \pgfkeysvalueof{/exercise/local/title}%
@@ -33,11 +41,39 @@
       \pgfkeysvalueof{/exercise/title}%
     }%
   }%
-  \hfill
-  \marginnote{\pgfkeysvalueof{/exercise/points}}%
+  \hfill%
+  % print exercise points
+  \pgfkeysifdefined{/exercise/local/nopoints}{}{%
+    \marginnote{%
+      \pgfkeysifdefined{/exercise/local/points}{%
+        \pgfkeysvalueof{/exercise/local/points}~P.
+      }{%
+        \pgfkeysifdefined{/exercise/points}{%
+          \pgfkeysvalueof{/exercise/points}~P.
+        }{}%
+      }%
+    }%
+  }%
   \par\medskip
 }{%
   \bigskip\par
 }
+
+
+\newcommand{\importExercise}[3][]{%
+  % use the group to make pgfkey-changes temporary
+  \begingroup
+  \pgfkeys{%
+    exercise/local,
+    type/.style = {type/.initial = ##1},
+    title/.style = {title/.initial = ##1},
+    points/.style = {points/.initial = ##1},
+    nopoints/.style = {nopoints/.initial= ##1},
+    #1
+  }%
+  \import{#2}{#3}%
+  \endgroup
+}
+
 
 \endinput
