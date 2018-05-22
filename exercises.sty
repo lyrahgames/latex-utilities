@@ -5,6 +5,7 @@
 \RequirePackage{etoolbox}
 \RequirePackage{import}
 \RequirePackage{marginnote}
+\RequirePackage{enumitem}
 
 \pgfkeys{%
   /exercise/.style = /exercise/.cd,
@@ -31,8 +32,8 @@
     exercise,
     type/.initial = Aufgabe,
     title/.initial =,
-    points/.style = {points/.initial = ##1},
-    #1
+    points/.style = {points/.initial = ##1},%
+    #1%
   }%
   %
   \setlength\parindent{0mm}
@@ -111,5 +112,12 @@
   \endgroup
 }
 
+\newenvironment{exerciseSubequations}{
+  \begin{enumerate}[label=\normalfont(\roman*)]
+  \let\olditem\item
+  \def\item##1{\olditem \ensuremath{ \qquad \begin{aligned}[t] ##1 \end{aligned} } }
+}{
+  \end{enumerate}
+}
 
 \endinput
