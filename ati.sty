@@ -1,0 +1,417 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{ati}[abstract task interface]
+
+\RequirePackage{pgfkeys}
+\RequirePackage{etoolbox}
+\RequirePackage{import}
+\RequirePackage{marginnote}
+\RequirePackage{enumitem}
+
+
+% construct ati state variables
+\newif\ifatiNumberTask
+\newcounter{atiTaskCounter}
+\newif\ifatiShowSolution
+\pgfkeys{%
+  /ati/.is family,
+  ati,
+  local/.is family,
+  global/.is family,
+  /ati/solution/call/.initial = Lösung,
+}
+
+% global ati setup (pgfkeys is not scoped)
+\newcommand{\atiSetup}[1]{%
+  \pgfkeys{%
+    ati/global,
+    nopoints/.style = {nopoints/.initial},
+    type/.style = {type/.initial = ##1},
+    nocounter/.style = {nocounter/.initial},
+    number/.is if = atiNumberTask,
+    show solution/.is if = atiShowSolution,
+    #1
+  }%
+}
+
+\newenvironment{atiTask}[1][]{
+  \newcommand\locallabel[1]{\label{ati:\theatiTaskCounter:##1}}
+  \newcommand\localref[1]{\ref{ati:\theatiTaskCounter:##1}}
+  \pgfkeys{%
+    ati,
+    type/.initial = Aufgabe,
+    title/.initial =,
+    points/.style = {points/.initial = ##1},%
+    #1%
+  }%
+  %
+  \setlength\parindent{0mm}%
+  \bigskip\par%
+  {
+    \large%
+    \textbf{%
+      % print exercise type
+      \pgfkeysifdefined{/ati/local/type}{%
+        \pgfkeysvalueof{/ati/local/type}%
+      }{%
+        \pgfkeysifdefined{/ati/global/type}{%
+          \pgfkeysvalueof{/ati/global/type}%
+        }{%
+          \pgfkeysvalueof{/ati/type}%
+        }%
+      }%
+      % print exercise counter
+      % \pgfkeysifdefined{/ati/global/nocounter}{%
+      %   \pgfkeysifdefined{/ati/local/counter}{%
+      %     \refstepcounter{atiTaskCounter}%
+      %     ~\theatiTaskCounter%
+      %   }{}%
+      % }{%
+      %   \pgfkeysifdefined{/ati/local/nocounter}{}{%
+      %     \refstepcounter{atiTaskCounter}%
+      %     ~\theatiTaskCounter%
+      %   }%
+      % }%
+      \ifatiNumberTask%
+        \refstepcounter{atiTaskCounter}%
+        ~\theatiTaskCounter
+      \else%
+      \fi%
+    }%
+  }%
+  \qquad%
+  % print exercise title
+  \textit{%
+    \pgfkeysifdefined{/ati/local/title}{%
+      \pgfkeysvalueof{/ati/local/title}%
+    }{%
+      \pgfkeysvalueof{/ati/title}%
+    }%
+  }%
+  \hfill%
+  % print exercise points
+  \pgfkeysifdefined{/ati/local/nopoints}{}{%
+    \marginnote{%
+      \pgfkeysifdefined{/ati/local/points}{%
+        \pgfkeysvalueof{/ati/local/points}~P.
+      }{%
+        \pgfkeysifdefined{/ati/global/nopoints}{}{%
+          \pgfkeysifdefined{/ati/points}{%
+            \pgfkeysvalueof{/ati/points}~P.
+          }{}%
+        }%
+      }%
+    }%
+  }%
+  \par\medskip
+}{%
+  \bigskip\par
+}
+
+\newenvironment{atiSolution}{%
+  \newcommand\locallabel[1]{\label{ati:\theatiTaskCounter:##1}}%
+  \newcommand\localref[1]{\ref{ati:\theatiTaskCounter:##1}}%
+  %
+  \ifatiShowSolution%
+    \setlength\parindent{0mm}%
+    \bigskip\par%
+    \noindent%
+    {%
+      % \noindent%
+      \large%
+      \textsc{%
+        \pgfkeys{/ati/solution/call}:
+      }%
+    }%
+    \hfill
+    \medskip
+    \par
+  \else%
+    \comment
+  \fi%
+}{%
+  \ifatiShowSolution%
+    \bigskip
+    \par
+  \else%
+    \endcomment
+  \fi%
+}
+
+
+\newcommand{\atiImportTask}[3][]{%
+  % use the group to make pgfkey-changes temporary
+  \begingroup
+  \pgfkeys{%
+    ati/local,
+    type/.style = {type/.initial = ##1},
+    title/.style = {title/.initial = ##1},
+    points/.style = {points/.initial = ##1},
+    nopoints/.style = {nopoints/.initial= ##1},
+    counter/.style = {counter/.initial = ##1},
+    nocounter/.style = {nocounter/.initial},
+    number/.is if = atiNumberTask,
+    show solution/.is if = atiShowSolution,
+    #1
+  }%
+  \import{#2}{#3}%
+  \endgroup
+}
+
+\newenvironment{atiSubequations}{
+  \begin{enumerate}[label=\normalfont(\roman*)]
+  \let\olditem\item
+  \def\item##1{\olditem \ensuremath{ \qquad \begin{aligned}[t] ##1 \end{aligned} } }
+}{
+  \end{enumerate}
+}
+
+\newenvironment{atiSubtasks}{%
+  % \begin{enumerate}[label=\normalfont(\alph*), topsep=0pt]
+  \begin{enumerate}[label=\normalfont(\alph*)]
+}{%
+  \end{enumerate}
+}
+
+\newenvironment{atiSubsubtasks}{%
+  % \begin{enumerate}[label=\normalfont(\arabic*), topsep=0pt]
+  \begin{enumerate}[label=\normalfont(\arabic*)]
+}{%
+  \end{enumerate}
+}
+
+\newenvironment{atiNote}{%
+  \medskip\textbf{Hinweis:}
+}{%
+
+}
+
+\newenvironment{atiSubtaskSolutions}{
+  \begin{description}[style=multiline]
+}{
+  \end{description}
+}
+
+\newenvironment{atiItems}{
+  \begin{itemize}
+}{
+  \end{itemize}
+}
+
+\newcounter{atiPointsCounter}
+\newcommand{\atiPointsPrefix}{}
+\newcommand{\atiPointsSuffix}{~P.}
+\newcommand{\atiPoints}[1][1]{\marginnote{\atiPointsPrefix\ensuremath{#1}\atiPointsSuffix}\refstepcounter{atiPointsCounter}}
+
+\newcommand{\atiShowPoints}[1]{\atiPointsPrefix#1\atiPointsSuffix}
+
+\newcommand{\atiPointsCount}{\marginnote{\rule{1cm}{0.5pt}\\ \atiPointsPrefix\theatiPointsCounter\atiPointsSuffix}}
+
+\endinput
+
+% \NeedsTeXFormat{LaTeX2e}
+% \ProvidesPackage{ati}[2017/07/05 Abstract Task Interface v0.1]
+
+% \RequirePackage{enumitem}
+% \RequirePackage{marginnote}
+% \RequirePackage{exsheets}
+
+% \RequirePackage[autostyle=true,german=guillemets]{csquotes}
+
+% % \RequirePackage{atimathsym}
+% \RequirePackage{utilities}
+% \RequirePackage{uniinput}
+
+% \RequirePackage{multienum}
+% \RequirePackage{comment}
+
+
+% % \DeclareOption{pgfkeys}{
+%   \def\atiKeySystem{pgfkeys}
+%   \AtEndOfPackage{\RequirePackage{pgfkeys}}
+
+%   \pgfkeys{
+%     /ati/.style = /ati/.cd,
+%     ati,
+%     .unknown/.code = ,
+%     task/.style = /ati/task/.cd,
+%     task,
+%     .unknown/.code = ,
+%     call/.initial = Aufgabe,
+%     title/.estore in = \atiTaskTitle,
+%     title/.default = ,
+%     language/.estore in = \atiTaskLanguage,
+%     language/.default = Deutsch,
+%     points/.estore in = \atiTaskPoints,
+%     points/.default = 0,[pages=-]
+%     topic/.estore in = \atiTaskTopic,
+%     topic/.default = ,
+%     subtopic/.estore in = \atiTaskSubtopic,
+%     subtopic/.default = ,
+%   }
+% % }
+
+% % \DeclareOption{exsheets}{
+% %   \def\atiTaskSystem{exsheets}
+% %   \AtEndOfPackage{\RequirePackage{exsheets}}
+
+% %   \DeclareInstance{exsheets-heading}{block-subtitle}{default}{
+% %     join = {
+% %       title[r,B]number[l,B](0.333em,0pt);
+% %       title[r,B]subtitle[l,B](1em,0pt)
+% %     },
+% %     attach = {
+% %       main[l,vc]title[l,vc](0pt,0pt);
+% %       main[r,vc]points[l,vc](\marginparsep,0pt)
+% %     }
+% %   }[pages=-]
+
+% %   % \SetupExSheets{headings=block-subtitle, solution/print=true}
+% %   \SetupExSheets{headings=block-subtitle}
+
+% %   \newenvironment{atiTask}[1][]{
+% %     \pgfkeys{ati/task,title,points,#1}
+% %     \question[subtitle=\atiTaskTitle]{\atiTaskPoints}
+% %   }{
+% %     % \end{question}
+% %     \endquestion
+% %   }
+
+% %   \newenvironment{atiSolution}{
+% %     \solution
+% %   }{
+% %     \endsolution
+% %   }
+% % }
+
+% % \DeclareOption{custom}{
+%   \def\atiTaskSystem{custom}
+
+%   \newcounter{atiTaskCounter}
+
+%   \newenvironment{atiTask}[1][]{
+%     \setlength\parindent{0mm}
+%     \pgfkeys{ati/task,points,#1}
+%     \refstepcounter{atiTaskCounter}
+%     \newcommand\locallabel[1]{\label{ati:\theatiTaskCounter:##1}}
+%     \newcommand\localref[1]{\ref{ati:\theatiTaskCounter:##1}}
+%     \bigskip\par%
+%     {
+%       \large%
+%       \textbf{%
+%         \pgfkeysvalueof{/ati/task/call}
+%         \theatiTaskCounter
+%       }
+%     }
+%     %\hfill
+%     \quad
+%     \ifdefined\atiTaskTitle
+%       \textit{\atiTaskTitle}%
+%       \nopagebreak[4]
+%     \fi%
+%     % \marginnote{\atiShowPoints{\atiTaskPoints}}
+%     % \medskip%
+%     \par\medskip%
+%     % \begin{samepage}
+%   }{
+%     % \end{samepage}
+%     % \bigskip\par
+%     % \footnotesize
+%     % topic: \atiTaskTopic \\
+%     % subtopic: \atiTaskSubtopic \\
+%     % language: \atiTaskLanguage
+%     \bigskip\par
+%   }
+
+%   \newif\ifatiShowSolutions
+%   % here is the toggl for showing solutions
+%   \atiShowSolutionsfalse
+%   %\atiShowSolutionstrue
+%   \ifatiShowSolutions
+%     \newenvironment{atiSolution}{
+%       % \ifatiShowSolutions
+%         \setlength\parindent{0mm}
+%         \newcommand\locallabel[1]{\label{ati:\theatiTaskCounter:##1}}
+%         \newcommand\localref[1]{\ref{ati:\theatiTaskCounter:##1}}
+%         \bigskip\par%
+%         \noindent%
+%         {
+%           % \noindent%
+%           \large%
+%           \textsc{%
+%             Lösung:
+%           }
+%         }
+%         \hfill
+%         \medskip
+%         \par
+%       % \else
+%       %   \comment
+%       % \fi
+%     }{
+%       % \ifatiShowSolutions
+%         \bigskip
+%         \par
+%       % \else
+%       %   \endcomment
+%       % \fi
+%     }
+%   \else
+%     \excludecomment{atiSolution}
+%   \fi
+% % }
+
+
+% % \ExecuteOptions{pgfkeys,custom}
+% \ProcessOptions\relax
+
+
+% \newenvironment{atiSubtasks}{%
+%   % \begin{enumerate}[label=\normalfont(\alph*), topsep=0pt]
+%   \begin{enumerate}[label=\normalfont(\alph*)]
+% }{%
+%   \end{enumerate}
+% }
+
+% \newenvironment{atiSubsubtasks}{%
+%   % \begin{enumerate}[label=\normalfont(\arabic*), topsep=0pt]
+%   \begin{enumerate}[label=\normalfont(\arabic*)]
+% }{%
+%   \end{enumerate}
+% }
+
+% \newenvironment{atiNote}{%
+%   \medskip\textbf{Hinweis:}
+% }{%
+
+% }
+
+% \newenvironment{atiSubtaskSolutions}{
+%   \begin{description}[style=multiline]
+% }{
+%   \end{description}
+% }
+
+% \newenvironment{atiSubequations}{
+%   \begin{enumerate}[label=\normalfont(\roman*)]
+%   \let\olditem\item
+%   \def\item##1{\olditem \ensuremath{ \qquad \begin{aligned}[t] ##1 \end{aligned} } }
+% }{
+%   \end{enumerate}
+% }
+
+% \newenvironment{atiItems}{
+%   \begin{itemize}
+% }{
+%   \end{itemize}
+% }
+
+% \newcounter{atiPointsCounter}
+% \newcommand{\atiPointsPrefix}{}
+% \newcommand{\atiPointsSuffix}{~P.}
+% \newcommand{\atiPoints}[1][1]{\marginnote{\atiPointsPrefix\ensuremath{#1}\atiPointsSuffix}\refstepcounter{atiPointsCounter}}
+
+% \newcommand{\atiShowPoints}[1]{\atiPointsPrefix#1\atiPointsSuffix}
+
+% \newcommand{\atiPointsCount}{\marginnote{\rule{1cm}{0.5pt}\\ \atiPointsPrefix\theatiPointsCounter\atiPointsSuffix}}
+
+% \endinput
