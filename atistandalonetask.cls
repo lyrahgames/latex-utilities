@@ -3,7 +3,8 @@
 
 \LoadClass[crop=false]{standalone}
 
-% do not require more than this package
+% do not require more than these packages
+\RequirePackage[utf8]{inputenc}
 \RequirePackage{ati}
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{standalone}}
