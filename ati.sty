@@ -7,6 +7,11 @@
 \RequirePackage{marginnote}
 \RequirePackage{enumitem}
 
+% create a table of contents for atiTasks: use \listofatitask
+\RequirePackage[titles]{tocloft}
+\providecommand{\atiListOfTasks}{Aufgabenverzeichnis}
+\newlistof{atitask}{atitasklist}{\atiListOfTasks}
+
 % construct ati state variables
 \newif\ifatiNumberTask
 \newcounter{atiTaskCounter}
@@ -63,22 +68,14 @@
           \pgfkeysvalueof{/ati/type}%
         }%
       }%
-      % print exercise counter
-      % \pgfkeysifdefined{/ati/global/nocounter}{%
-      %   \pgfkeysifdefined{/ati/local/counter}{%
-      %     \refstepcounter{atiTaskCounter}%
-      %     ~\theatiTaskCounter%
-      %   }{}%
-      % }{%
-      %   \pgfkeysifdefined{/ati/local/nocounter}{}{%
-      %     \refstepcounter{atiTaskCounter}%
-      %     ~\theatiTaskCounter%
-      %   }%
-      % }%
       \ifatiNumberTask%
         \refstepcounter{atiTaskCounter}%
-        ~\theatiTaskCounter
+        ~\theatiTaskCounter%
+        % add exercise to the exercise list
+        \addcontentsline{atitasklist}{figure}{\protect{\pgfkeysvalueof{/ati/type}~\numberline{\theatiTaskCounter:}~\pgfkeysvalueof{/ati/title}}}
       \else%
+        % add exercise to the exercise list
+        \addcontentsline{atitasklist}{figure}{\protect{\pgfkeysvalueof{/ati/type}~\numberline{:}~\pgfkeysvalueof{/ati/title}}}
       \fi%
     }%
   }%
