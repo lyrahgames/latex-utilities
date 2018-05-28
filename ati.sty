@@ -206,212 +206,70 @@
 
 \newcommand{\atiPointsCount}{\marginnote{\rule{1cm}{0.5pt}\\ \atiPointsPrefix\theatiPointsCounter\atiPointsSuffix}}
 
+
+\newcommand{\atiSheetHead}[1]{%
+  \pgfkeys{%
+    ati,
+    sheet/.is family,
+    sheet,
+    title/.initial = ,
+    type/.initial = Übungsserie,
+    number/.style = {number/.initial = ##1},
+    author/.style = {author/.initial = ##1},
+    mail/.style = {mail/.initial = ##1},
+    submission call/.initial = Abgabe:,
+    submission date/.style = {submission date/.initial = ##1},
+    last update call/.initial = Version:,
+    last update/.style = {last update/.initial = ##1},
+    extra info/.style = {extra info/.initial = ##1},
+    #1
+  }%
+  %
+  \thispagestyle{empty}%
+  %
+  \hrule
+  \section*{%
+    \centering%
+    \pgfkeysvalueof{/ati/sheet/title} \\%
+    \pgfkeysvalueof{/ati/sheet/type}%
+    \pgfkeysifdefined{/ati/sheet/number}{%
+      ~\pgfkeysvalueof{/ati/sheet/number}%
+    }{}%
+  }
+  \medskip
+  \footnotesize
+  \begin{minipage}[c]{0.49\textwidth}%
+    \pgfkeysifdefined{/ati/sheet/author}{%
+      \pgfkeysvalueof{/ati/sheet/author}%
+      \pgfkeysifdefined{/ati/sheet/mail}{%
+        \\%
+        \pgfkeysvalueof{/ati/sheet/mail}%
+      }{}%
+    }{}%
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[c]{0.49\textwidth}%
+    \raggedleft%
+    \pgfkeysifdefined{/ati/sheet/last update}{%
+      \pgfkeysvalueof{/ati/sheet/last update call}%
+      ~\pgfkeysvalueof{/ati/sheet/last update}%
+    }{}%
+
+    \pgfkeysifdefined{/ati/sheet/submission date}{%
+      \pgfkeysvalueof{/ati/sheet/submission call}%
+      ~\pgfkeysvalueof{/ati/sheet/submission date}%
+    }{}%
+
+    \pgfkeysifdefined{/ati/sheet/extra info}{%
+      \pgfkeysvalueof{/ati/sheet/extra info}%
+    }{}%
+  \end{minipage}
+  \bigskip
+  \hrule
+  \bigskip
+  \bigskip%
+  \normalsize
+}
+
+
 \endinput
-
-% \NeedsTeXFormat{LaTeX2e}
-% \ProvidesPackage{ati}[2017/07/05 Abstract Task Interface v0.1]
-
-% \RequirePackage{enumitem}
-% \RequirePackage{marginnote}
-% \RequirePackage{exsheets}
-
-% \RequirePackage[autostyle=true,german=guillemets]{csquotes}
-
-% % \RequirePackage{atimathsym}
-% \RequirePackage{utilities}
-% \RequirePackage{uniinput}
-
-% \RequirePackage{multienum}
-% \RequirePackage{comment}
-
-
-% % \DeclareOption{pgfkeys}{
-%   \def\atiKeySystem{pgfkeys}
-%   \AtEndOfPackage{\RequirePackage{pgfkeys}}
-
-%   \pgfkeys{
-%     /ati/.style = /ati/.cd,
-%     ati,
-%     .unknown/.code = ,
-%     task/.style = /ati/task/.cd,
-%     task,
-%     .unknown/.code = ,
-%     call/.initial = Aufgabe,
-%     title/.estore in = \atiTaskTitle,
-%     title/.default = ,
-%     language/.estore in = \atiTaskLanguage,
-%     language/.default = Deutsch,
-%     points/.estore in = \atiTaskPoints,
-%     points/.default = 0,[pages=-]
-%     topic/.estore in = \atiTaskTopic,
-%     topic/.default = ,
-%     subtopic/.estore in = \atiTaskSubtopic,
-%     subtopic/.default = ,
-%   }
-% % }
-
-% % \DeclareOption{exsheets}{
-% %   \def\atiTaskSystem{exsheets}
-% %   \AtEndOfPackage{\RequirePackage{exsheets}}
-
-% %   \DeclareInstance{exsheets-heading}{block-subtitle}{default}{
-% %     join = {
-% %       title[r,B]number[l,B](0.333em,0pt);
-% %       title[r,B]subtitle[l,B](1em,0pt)
-% %     },
-% %     attach = {
-% %       main[l,vc]title[l,vc](0pt,0pt);
-% %       main[r,vc]points[l,vc](\marginparsep,0pt)
-% %     }
-% %   }[pages=-]
-
-% %   % \SetupExSheets{headings=block-subtitle, solution/print=true}
-% %   \SetupExSheets{headings=block-subtitle}
-
-% %   \newenvironment{atiTask}[1][]{
-% %     \pgfkeys{ati/task,title,points,#1}
-% %     \question[subtitle=\atiTaskTitle]{\atiTaskPoints}
-% %   }{
-% %     % \end{question}
-% %     \endquestion
-% %   }
-
-% %   \newenvironment{atiSolution}{
-% %     \solution
-% %   }{
-% %     \endsolution
-% %   }
-% % }
-
-% % \DeclareOption{custom}{
-%   \def\atiTaskSystem{custom}
-
-%   \newcounter{atiTaskCounter}
-
-%   \newenvironment{atiTask}[1][]{
-%     \setlength\parindent{0mm}
-%     \pgfkeys{ati/task,points,#1}
-%     \refstepcounter{atiTaskCounter}
-%     \newcommand\locallabel[1]{\label{ati:\theatiTaskCounter:##1}}
-%     \newcommand\localref[1]{\ref{ati:\theatiTaskCounter:##1}}
-%     \bigskip\par%
-%     {
-%       \large%
-%       \textbf{%
-%         \pgfkeysvalueof{/ati/task/call}
-%         \theatiTaskCounter
-%       }
-%     }
-%     %\hfill
-%     \quad
-%     \ifdefined\atiTaskTitle
-%       \textit{\atiTaskTitle}%
-%       \nopagebreak[4]
-%     \fi%
-%     % \marginnote{\atiShowPoints{\atiTaskPoints}}
-%     % \medskip%
-%     \par\medskip%
-%     % \begin{samepage}
-%   }{
-%     % \end{samepage}
-%     % \bigskip\par
-%     % \footnotesize
-%     % topic: \atiTaskTopic \\
-%     % subtopic: \atiTaskSubtopic \\
-%     % language: \atiTaskLanguage
-%     \bigskip\par
-%   }
-
-%   \newif\ifatiShowSolutions
-%   % here is the toggl for showing solutions
-%   \atiShowSolutionsfalse
-%   %\atiShowSolutionstrue
-%   \ifatiShowSolutions
-%     \newenvironment{atiSolution}{
-%       % \ifatiShowSolutions
-%         \setlength\parindent{0mm}
-%         \newcommand\locallabel[1]{\label{ati:\theatiTaskCounter:##1}}
-%         \newcommand\localref[1]{\ref{ati:\theatiTaskCounter:##1}}
-%         \bigskip\par%
-%         \noindent%
-%         {
-%           % \noindent%
-%           \large%
-%           \textsc{%
-%             Lösung:
-%           }
-%         }
-%         \hfill
-%         \medskip
-%         \par
-%       % \else
-%       %   \comment
-%       % \fi
-%     }{
-%       % \ifatiShowSolutions
-%         \bigskip
-%         \par
-%       % \else
-%       %   \endcomment
-%       % \fi
-%     }
-%   \else
-%     \excludecomment{atiSolution}
-%   \fi
-% % }
-
-
-% % \ExecuteOptions{pgfkeys,custom}
-% \ProcessOptions\relax
-
-
-% \newenvironment{atiSubtasks}{%
-%   % \begin{enumerate}[label=\normalfont(\alph*), topsep=0pt]
-%   \begin{enumerate}[label=\normalfont(\alph*)]
-% }{%
-%   \end{enumerate}
-% }
-
-% \newenvironment{atiSubsubtasks}{%
-%   % \begin{enumerate}[label=\normalfont(\arabic*), topsep=0pt]
-%   \begin{enumerate}[label=\normalfont(\arabic*)]
-% }{%
-%   \end{enumerate}
-% }
-
-% \newenvironment{atiNote}{%
-%   \medskip\textbf{Hinweis:}
-% }{%
-
-% }
-
-% \newenvironment{atiSubtaskSolutions}{
-%   \begin{description}[style=multiline]
-% }{
-%   \end{description}
-% }
-
-% \newenvironment{atiSubequations}{
-%   \begin{enumerate}[label=\normalfont(\roman*)]
-%   \let\olditem\item
-%   \def\item##1{\olditem \ensuremath{ \qquad \begin{aligned}[t] ##1 \end{aligned} } }
-% }{
-%   \end{enumerate}
-% }
-
-% \newenvironment{atiItems}{
-%   \begin{itemize}
-% }{
-%   \end{itemize}
-% }
-
-% \newcounter{atiPointsCounter}
-% \newcommand{\atiPointsPrefix}{}
-% \newcommand{\atiPointsSuffix}{~P.}
-% \newcommand{\atiPoints}[1][1]{\marginnote{\atiPointsPrefix\ensuremath{#1}\atiPointsSuffix}\refstepcounter{atiPointsCounter}}
-
-% \newcommand{\atiShowPoints}[1]{\atiPointsPrefix#1\atiPointsSuffix}
-
-% \newcommand{\atiPointsCount}{\marginnote{\rule{1cm}{0.5pt}\\ \atiPointsPrefix\theatiPointsCounter\atiPointsSuffix}}
-
-% \endinput
