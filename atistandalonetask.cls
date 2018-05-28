@@ -7,6 +7,9 @@
 \RequirePackage[utf8]{inputenc}
 \RequirePackage{ati}
 
+\atiSetup{show solution}
+\let\atiSetup\undefined
+
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{standalone}}
 \ProcessOptions\relax
 
