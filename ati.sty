@@ -33,6 +33,10 @@
   }%
 }
 
+% define some good defaults for ati
+\atiSetup{show solution = false, number}
+
+% define important environments
 \newenvironment{atiTask}[1][]{
   \newcommand\locallabel[1]{\label{ati:\theatiTaskCounter:##1}}
   \newcommand\localref[1]{\ref{ati:\theatiTaskCounter:##1}}
