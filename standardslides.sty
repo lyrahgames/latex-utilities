@@ -56,10 +56,16 @@
 
 \RequirePackage{multicol}
 
+\RequirePackage{lmodern}
 \RequirePackage{bookman}
 \usecolortheme{seahorse}
 \usefonttheme[onlymath]{serif}
 
+\newenvironment{mybox}{
+  \begin{beamercolorbox}[sep=0pt,center,shadow=true,rounded=true]{title}
+}{
+  \end{beamercolorbox}
+}
 
 \AtBeginSection[]{
   \begin{frame}
@@ -70,12 +76,6 @@
     \end{beamercolorbox}
     \vfill
   \end{frame}
-}
-
-\newenvironment{mybox}{
-  \begin{beamercolorbox}[sep=0pt,center,shadow=true,rounded=true]{title}
-}{
-  \end{beamercolorbox}
 }
 
 \endinput
