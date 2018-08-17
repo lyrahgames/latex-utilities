@@ -15,7 +15,8 @@
 \definecolor{mathdefback}{rgb}{0.95,0.95,0.98}
 % unnumerated mathematical definition environment definiton
 \newenvironment{mathdef*}[2]{
-  \medskip
+  % \medskip
+  \bigskip
   \begin{tcolorbox}[colback=mathdefback, boxrule=0.5pt, colframe=black, boxsep=0pt, enhanced jigsaw, breakable, arc=3pt]
   \noindent
   { \fontfamily{ppl}\selectfont \textbf{\textsc{#1:}} } ~ #2
