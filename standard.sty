@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{standard}[2017/07/06 includes standard packages v0.1]
+\ProvidesPackage{standard}[2019/04/05 includes standard packages v0.1]
 
 % include custom packages
 % (it seems that the order is important)
@@ -7,7 +7,9 @@
 \RequirePackage{uniinput}
 \RequirePackage{utilities}
 \RequirePackage{mathenvironments}
+
 \RequirePackage{pagestyles}
+\pagestyle{mainstyle}
 
 % \RequirePackage{extsizes}
 
@@ -19,24 +21,15 @@
 
 \RequirePackage[a4paper]{geometry}
 
-\linespread{1.15}\selectfont
+\linespread{1.15}
 
 \RequirePackage{times}
 
 % in document: \selectlanguage{<your language>}
 \RequirePackage[ngerman,english]{babel}
 
-\RequirePackage{titlesec}
-\titleformat*{\section}{\large\bfseries}
-\titleformat*{\subsection}{\bfseries}
-\titleformat*{\subsubsection}{\bfseries}
-\titleformat*{\paragraph}{\bfseries}
-\titleformat*{\subparagraph}{\bfseries}
-
 \RequirePackage{emptypage}
 \RequirePackage{multicol}
-
-\RequirePackage{float}
 
 \RequirePackage{amsmath}
 \RequirePackage{amssymb}
@@ -52,10 +45,25 @@
 \RequirePackage[hang,footnotesize]{caption}
 \RequirePackage[font=footnotesize]{subcaption}
 
-\RequirePackage[square,sort,comma,numbers]{natbib}
+\RequirePackage[autostyle,german=guillemets,english=american]{csquotes}
+\RequirePackage[backend=bibtex,bibstyle=nature,citestyle=numeric]{biblatex}
+\RequirePackage{tocbibind}
 \RequirePackage{url}
-\RequirePackage{babelbib}
-\usepackage[autostyle,german=guillemets,english=american]{csquotes}
-\bibliographystyle{babplain}
+\urlstyle{same}
+\RequirePackage{hyperref}
+\hypersetup{
+  colorlinks,
+  linkcolor={red!50!black},
+  citecolor={blue!50!black},
+  urlcolor={blue!80!black}
+}
+
+% \RequirePackage{titlesec}
+% \requirepackage{titletoc}
+% \titleformat*{\section}{\large\bfseries}
+% \titleformat*{\subsection}{\bfseries}
+% \titleformat*{\subsubsection}{\bfseries}
+% \titleformat*{\paragraph}{\bfseries}
+% \titleformat*{\subparagraph}{\bfseries}
 
 \endinput
