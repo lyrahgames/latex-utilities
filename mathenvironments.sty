@@ -12,19 +12,20 @@
 \newlistof{math}{mathlist}{\listofmathcall}
 % add parentheses around argument
 \newcommand{\parent}[1]{ \ifx&#1&\else (#1) \fi }
-\definecolor{mathdefback}{rgb}{0.95,0.95,0.98}
+\definecolor{mathdefback}{rgb}{0.97,0.97,0.99}
+% \definecolor{mathdefback}{rgb}{1,1,1}
 % unnumerated mathematical definition environment definiton
 \newenvironment{mathdef*}[2]{
   % \medskip
   \bigskip
-  \begin{tcolorbox}[colback=mathdefback, boxrule=0.5pt, colframe=black, boxsep=0pt, enhanced jigsaw, breakable, arc=3pt]
+  \begin{tcolorbox}[colback=mathdefback, boxrule=0.0pt, leftrule=1pt, colframe=black, boxsep=0pt, enhanced jigsaw, breakable, arc=0pt]
   \noindent
   { \fontfamily{ppl}\selectfont \textbf{\textsc{#1:}} } ~ #2
   \par \hfill\\
   \fontfamily{lmr}\selectfont \itshape
 }{
-  \end{tcolorbox}
-  \medskip
+  \end{tcolorbox}%
+  % \medskip
 }
 % definitions for numerated mathematical definition environment
 \newcounter{mathdefc}[section]
@@ -47,7 +48,7 @@
 % unnumerated theorem environment definition
 \newenvironment{maththeorem*}[2]{
   \medskip
-  \begin{tcolorbox}[boxrule=0pt, leftrule=2.5pt, arc=2pt, colback=white, colframe=maththeoremframe, enhanced jigsaw, breakable, vfill before first, top=0mm, bottom=0mm, left=2mm, right=0mm, boxsep=1mm]
+  \begin{tcolorbox}[boxrule=0pt, leftrule=2pt, arc=0pt, colback=white, colframe=maththeoremframe, enhanced jigsaw, breakable, vfill before first, top=0mm, bottom=0mm, left=2mm, right=0mm, boxsep=1mm]
   \noindent
   { \fontfamily{ppl}\selectfont \textbf{\textsc{#1:}} } ~ #2
   \par \hfill\\
