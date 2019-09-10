@@ -19,9 +19,10 @@
   % \medskip
   \bigskip
   \begin{tcolorbox}[colback=mathdefback, boxrule=0.0pt, leftrule=1pt, colframe=black, boxsep=0pt, enhanced jigsaw, breakable, arc=0pt]
-  \noindent
-  { \fontfamily{ppl}\selectfont \textbf{\textsc{#1:}} } ~ #2
-  \par \hfill\\
+  \noindent%
+  {\fontfamily{ppl}\selectfont\textbf{\textsc{#1:}}} ~ #2%
+  % \par%
+  \hfill\\[8pt]
   \fontfamily{lmr}\selectfont \itshape
 }{
   \end{tcolorbox}%
@@ -50,8 +51,9 @@
   \medskip
   \begin{tcolorbox}[boxrule=0pt, leftrule=2pt, arc=0pt, colback=white, colframe=maththeoremframe, enhanced jigsaw, breakable, vfill before first, top=0mm, bottom=0mm, left=2mm, right=0mm, boxsep=1mm]
   \noindent
-  { \fontfamily{ppl}\selectfont \textbf{\textsc{#1:}} } ~ #2
-  \par \hfill\\
+  {\fontfamily{ppl}\selectfont\textbf{\textsc{#1:}}} ~ #2%
+  %\par
+  \hfill\\[8pt]
   \fontfamily{lmr} \fontshape{it} \selectfont
 }{
   \end{tcolorbox}
