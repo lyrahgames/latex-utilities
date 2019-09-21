@@ -16,9 +16,9 @@
 % \definecolor{mathdefback}{rgb}{1,1,1}
 % unnumerated mathematical definition environment definiton
 \newenvironment{mathdef*}[2]{
-  % \medskip
-  \bigskip
-  \begin{tcolorbox}[colback=mathdefback, boxrule=0.0pt, leftrule=1pt, colframe=black, boxsep=0pt, enhanced jigsaw, breakable, arc=0pt]
+  \par%
+  \medskip%
+  \begin{tcolorbox}[colback=mathdefback, boxrule=0.0pt, leftrule=1pt, colframe=black, boxsep=0pt, enhanced jigsaw, breakable, arc=0pt, nobeforeafter]
   \noindent%
   {\fontfamily{ppl}\selectfont\textbf{\textsc{#1:}}} ~ #2%
   % \par%
@@ -26,7 +26,7 @@
   \fontfamily{lmr}\selectfont \itshape
 }{
   \end{tcolorbox}%
-  % \medskip
+  \medskip%
 }
 % definitions for numerated mathematical definition environment
 \newcounter{mathdefc}[section]
@@ -48,16 +48,17 @@
 
 % unnumerated theorem environment definition
 \newenvironment{maththeorem*}[2]{
-  \medskip
-  \begin{tcolorbox}[boxrule=0pt, leftrule=2pt, arc=0pt, colback=white, colframe=maththeoremframe, enhanced jigsaw, breakable, vfill before first, top=0mm, bottom=0mm, left=2mm, right=0mm, boxsep=1mm]
+  \par%
+  \medskip%
+  \begin{tcolorbox}[nobeforeafter,boxrule=0pt, leftrule=2pt, arc=0pt, colback=white, colframe=maththeoremframe, enhanced jigsaw, breakable, vfill before first, top=0mm, bottom=0mm, left=2mm, right=0mm, boxsep=1mm]
   \noindent
   {\fontfamily{ppl}\selectfont\textbf{\textsc{#1:}}} ~ #2%
   %\par
   \hfill\\[8pt]
   \fontfamily{lmr} \fontshape{it} \selectfont
 }{
-  \end{tcolorbox}
-  \medskip
+  \end{tcolorbox}%
+  \medskip%
 }
 % definitions for numerated theorem environment
 \newcounter{maththeoremc}[section]
