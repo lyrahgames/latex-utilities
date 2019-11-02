@@ -50,15 +50,19 @@
 \newenvironment{maththeorem*}[2]{
   \par%
   \medskip%
-  \begin{tcolorbox}[nobeforeafter,boxrule=0pt, leftrule=2pt, arc=0pt, colback=white, colframe=maththeoremframe, enhanced jigsaw, breakable, vfill before first, top=0mm, bottom=0mm, left=2mm, right=0mm, boxsep=1mm]
+  \begin{tcolorbox}[boxrule=0pt, leftrule=2pt, arc=0pt, colback=white, colframe=maththeoremframe, enhanced jigsaw, breakable, top=0mm, bottom=0mm, left=2mm, right=0mm, boxsep=1mm, nobeforeafter]
   \noindent
   {\fontfamily{ppl}\selectfont\textbf{\textsc{#1:}}} ~ #2%
   %\par
   \hfill\\[8pt]
-  \fontfamily{lmr} \fontshape{it} \selectfont
-}{
+  \fontfamily{lmr}\fontshape{it}\selectfont%
+}{%
   \end{tcolorbox}%
   \medskip%
+  \par%
+  \ignorespaces%
+  \noindent%
+  \ignorespacesafterend%
 }
 % definitions for numerated theorem environment
 \newcounter{maththeoremc}[section]
@@ -70,6 +74,8 @@
   \begin{maththeorem*}{#1 \maththeoremnum}{#2}
 }{
   \end{maththeorem*}
+  \noindent%
+  \ignorespacesafterend%
 }
 % standard maththeorem calls
 \newcommand{\theoremcall}{Theorem}
@@ -82,14 +88,14 @@
 \newenvironment{proposition*}[1][]{ \begin{maththeorem*}{\propositioncall}{\parent{#1}} }{ \end{maththeorem*} }
 \newenvironment{proposition}[1][]{ \begin{maththeorem}{\propositioncall}{\parent{#1}} }{ \end{maththeorem} }
 \newcommand{\corollarycall}{Corollary}
-\newenvironment{corollary*}[1][]{ \begin{maththeorem*}{\corollarycall}{\parent{#1}} }{ \end{maththeorem*} }
-\newenvironment{corollary}[1][]{ \begin{maththeorem}{\corollarycall}{\parent{#1}} }{ \end{maththeorem} }
+\newenvironment{corollary*}[1][]{\begin{maththeorem*}{\corollarycall}{\parent{#1}}}{\end{maththeorem*}}
+\newenvironment{corollary}[1][]{\ignorespaces\begin{maththeorem}{\corollarycall}{\parent{#1}}}{\end{maththeorem}\ignorespacesafterend}
 % q.e.d. definition
 \newcommand{\qed}{ \par \hfill \fontfamily{lmr} \fontshape{it} \selectfont \mbox{q.e.d.} \\}
-\newcommand{\qedbox}{ \hfill $\Box$ }
+\newcommand{\qedbox}{\hfill $\Box$}
 % proof environment definition for theorems
 \newenvironment{mathproof}[2]{%
-  % \par\hfill\\
+  \par%\hfill\\
   \medskip%
   % \noindent
   % \par
@@ -101,15 +107,19 @@
   \normalfont%
   \small%
   % \noindent%
-}{
+}{%
   \end{tcolorbox}%
   % \end{adjustwidth}
   % \qedbox
+  % \ignorespacesafterend%
   \medskip%
+  \par%
+  \noindent%
+  \ignorespacesafterend%
 }
 % standard mathproof calls
 \newcommand{\proofcall}{Proof}
-\newenvironment{proof}[1][]{ \begin{mathproof}{\textbf{\proofcall}}{#1} }{ \qedbox \end{mathproof} }
+\newenvironment{proof}[1][]{\ignorespaces\begin{mathproof}{\textbf{\proofcall}}{#1}}{\qedbox\end{mathproof}\par\noindent\ignorespacesafterend}
 \newcommand{\proofideacall}{Beweisidee}
 \newenvironment{proofidea}[1][]{ \begin{mathproof}{\proofideacall}{#1} }{ \end{mathproof} }
 
