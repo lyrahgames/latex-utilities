@@ -80,13 +80,13 @@
 % standard maththeorem calls
 \newcommand{\theoremcall}{Theorem}
 \newenvironment{theorem*}[1][]{ \begin{maththeorem*}{\theoremcall}{\parent{#1}} }{ \end{maththeorem*} }
-\newenvironment{theorem}[1][]{ \begin{maththeorem}{\theoremcall}{\parent{#1}} }{ \end{maththeorem} }
+\newenvironment{theorem}[1][]{\ignorespaces\begin{maththeorem}{\theoremcall}{\parent{#1}} }{ \end{maththeorem}\ignorespacesafterend}
 \newcommand{\lemmacall}{Lemma}
 \newenvironment{lemma*}[1][]{ \begin{maththeorem*}{\lemmacall}{\parent{#1}} }{ \end{maththeorem*} }
-\newenvironment{lemma}[1][]{ \begin{maththeorem}{\lemmacall}{\parent{#1}} }{ \end{maththeorem} }
+\newenvironment{lemma}[1][]{\ignorespaces\begin{maththeorem}{\lemmacall}{\parent{#1}} }{ \end{maththeorem}\ignorespacesafterend}
 \newcommand{\propositioncall}{Proposition}
 \newenvironment{proposition*}[1][]{ \begin{maththeorem*}{\propositioncall}{\parent{#1}} }{ \end{maththeorem*} }
-\newenvironment{proposition}[1][]{ \begin{maththeorem}{\propositioncall}{\parent{#1}} }{ \end{maththeorem} }
+\newenvironment{proposition}[1][]{\ignorespaces\begin{maththeorem}{\propositioncall}{\parent{#1}} }{ \end{maththeorem}\ignorespacesafterend}
 \newcommand{\corollarycall}{Corollary}
 \newenvironment{corollary*}[1][]{\begin{maththeorem*}{\corollarycall}{\parent{#1}}}{\end{maththeorem*}}
 \newenvironment{corollary}[1][]{\ignorespaces\begin{maththeorem}{\corollarycall}{\parent{#1}}}{\end{maththeorem}\ignorespacesafterend}
