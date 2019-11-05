@@ -8,7 +8,7 @@
 \RequirePackage[titles]{tocloft}
 
 % init list of math for definitions and theorems
-\providecommand{\listofmathcall}{Verzeichnis der Definitionen und Sätze}
+\providecommand{\listofmathcall}{List of Definitions and Theorems}
 \newlistof{math}{mathlist}{\listofmathcall}
 % add parentheses around argument
 \newcommand{\parent}[1]{ \ifx&#1&\else (#1) \fi }
@@ -70,7 +70,7 @@
 \renewcommand{\themaththeoremc}{\maththeoremnum}
 \newenvironment{maththeorem}[2]{
   \refstepcounter{maththeoremc}
-  \addcontentsline{mathlist}{figure}{\protect{\qquad\numberline{\maththeoremnum}#1 ~ #2}}
+  \addcontentsline{mathlist}{figure}{\protect{\quad\numberline{\maththeoremnum}#1 ~ #2}}
   \begin{maththeorem*}{#1 \maththeoremnum}{#2}
 }{
   \end{maththeorem*}
