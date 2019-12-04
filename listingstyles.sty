@@ -82,6 +82,7 @@
   \end{center}
 }
 
-\newcommand{\code}[1]{\textbf{\texttt{\color{codeDarkGray}#1}}}
+% \newcommand{\code}[1]{\textbf{\texttt{\color{codeDarkGray}\footnotesize #1}}}
+\newcommand{\code}[1]{\lstinline[style=standard,language=c++,morekeywords={constexpr,noexcept,decltype,size_t,uint32_t,uint64_t,__m256i,__m256,__m256d,__m128i,__m128,__m128d}]{#1}}
 
 \endinput
