@@ -8,6 +8,7 @@
 \RequirePackage{tcolorbox}
 \RequirePackage{pgfkeys}
 \RequirePackage{changepage}
+\RequirePackage[titles]{tocloft}
 
 \ProcessOptions\relax
 
@@ -48,16 +49,25 @@
   framexrightmargin=\listingframemargin
 }
 
+\providecommand{\listofcodecall}{List of Code}
+\newlistof{code}{codelist}{\listofcodecall}
+\newcounter{codecounter}[section]
+\newcommand*{\codenumber}{\thesection.\arabic{codecounter}}
+\renewcommand{\thecode}{\codenumber}
+
 \newcommand{\inputCodeBlock}[2][]{%
   \pgfkeys{%
     listing/.is family,
     listing,
-    type/.initial = Code:,
+    type/.initial = Code,
     title/.initial =,
     style/.initial = standard,
     language/.initial = c++,
     #1
   }%
+  %
+  \refstepcounter{codecounter}%
+  \addcontentsline{codelist}{figure}{\protect{\numberline{\codenumber}\pgfkeysvalueof{/listing/title}}}%
   %
   \begin{center}
     \begin{tcolorbox}[%
@@ -71,7 +81,7 @@
       arc=5pt,
       breakable,
       width=\textwidth,
-      title=\pgfkeysvalueof{/listing/type}\quad\pgfkeysvalueof{/listing/title}
+      title=\pgfkeysvalueof{/listing/type}~\codenumber:\quad\pgfkeysvalueof{/listing/title}
     ]
       \lstinputlisting[%
         style = \pgfkeysvalueof{/listing/style},
