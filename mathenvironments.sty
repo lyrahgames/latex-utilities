@@ -34,15 +34,15 @@
 \renewcommand{\themathdefc}{\mathdefnum}
 \newenvironment{mathdef}[2]{
   \refstepcounter{mathdefc}
-  \addcontentsline{mathlist}{figure}{\protect{\numberline{\mathdefnum}#1 ~ #2}}
+  \addcontentsline{mathlist}{figure}{\protect{\numberline{\mathdefnum}#1: ~ #2}}
   \begin{mathdef*}{#1 \mathdefnum}{#2}
 }{
   \end{mathdef*}
 }
 % standard mathdef calls
 \newcommand{\definitioncall}{Definition}
-\newenvironment{definition*}[1][]{ \begin{mathdef*}{\definitioncall}{\parent{#1}} }{ \end{mathdef*} }
-\newenvironment{definition}[1][]{ \begin{mathdef}{\definitioncall}{\parent{#1}} }{ \end{mathdef} }
+\newenvironment{definition*}[1][]{ \begin{mathdef*}{\definitioncall}{#1} }{ \end{mathdef*} }
+\newenvironment{definition}[1][]{ \begin{mathdef}{\definitioncall}{#1} }{ \end{mathdef} }
 
 \definecolor{maththeoremframe}{rgb}{0.7,0.7,0.73}
 
@@ -70,7 +70,7 @@
 \renewcommand{\themaththeoremc}{\maththeoremnum}
 \newenvironment{maththeorem}[2]{
   \refstepcounter{maththeoremc}
-  \addcontentsline{mathlist}{figure}{\protect{\quad\numberline{\maththeoremnum}#1 ~ #2}}
+  \addcontentsline{mathlist}{figure}{\protect{\quad\numberline{\maththeoremnum}#1: ~ #2}}
   \begin{maththeorem*}{#1 \maththeoremnum}{#2}
 }{
   \end{maththeorem*}
@@ -79,17 +79,17 @@
 }
 % standard maththeorem calls
 \newcommand{\theoremcall}{Theorem}
-\newenvironment{theorem*}[1][]{ \begin{maththeorem*}{\theoremcall}{\parent{#1}} }{ \end{maththeorem*} }
-\newenvironment{theorem}[1][]{\ignorespaces\begin{maththeorem}{\theoremcall}{\parent{#1}} }{ \end{maththeorem}\ignorespacesafterend}
+\newenvironment{theorem*}[1][]{ \begin{maththeorem*}{\theoremcall}{#1} }{ \end{maththeorem*} }
+\newenvironment{theorem}[1][]{\ignorespaces\begin{maththeorem}{\theoremcall}{#1} }{ \end{maththeorem}\ignorespacesafterend}
 \newcommand{\lemmacall}{Lemma}
-\newenvironment{lemma*}[1][]{ \begin{maththeorem*}{\lemmacall}{\parent{#1}} }{ \end{maththeorem*} }
-\newenvironment{lemma}[1][]{\ignorespaces\begin{maththeorem}{\lemmacall}{\parent{#1}} }{ \end{maththeorem}\ignorespacesafterend}
+\newenvironment{lemma*}[1][]{ \begin{maththeorem*}{\lemmacall}{#1} }{ \end{maththeorem*} }
+\newenvironment{lemma}[1][]{\ignorespaces\begin{maththeorem}{\lemmacall}{#1} }{ \end{maththeorem}\ignorespacesafterend}
 \newcommand{\propositioncall}{Proposition}
-\newenvironment{proposition*}[1][]{ \begin{maththeorem*}{\propositioncall}{\parent{#1}} }{ \end{maththeorem*} }
-\newenvironment{proposition}[1][]{\ignorespaces\begin{maththeorem}{\propositioncall}{\parent{#1}} }{ \end{maththeorem}\ignorespacesafterend}
+\newenvironment{proposition*}[1][]{ \begin{maththeorem*}{\propositioncall}{#1} }{ \end{maththeorem*} }
+\newenvironment{proposition}[1][]{\ignorespaces\begin{maththeorem}{\propositioncall}{#1} }{ \end{maththeorem}\ignorespacesafterend}
 \newcommand{\corollarycall}{Corollary}
-\newenvironment{corollary*}[1][]{\begin{maththeorem*}{\corollarycall}{\parent{#1}}}{\end{maththeorem*}}
-\newenvironment{corollary}[1][]{\ignorespaces\begin{maththeorem}{\corollarycall}{\parent{#1}}}{\end{maththeorem}\ignorespacesafterend}
+\newenvironment{corollary*}[1][]{\begin{maththeorem*}{\corollarycall}{#1}}{\end{maththeorem*}}
+\newenvironment{corollary}[1][]{\ignorespaces\begin{maththeorem}{\corollarycall}{#1}}{\end{maththeorem}\ignorespacesafterend}
 % q.e.d. definition
 \newcommand{\qed}{ \par \hfill \fontfamily{lmr} \fontshape{it} \selectfont \mbox{q.e.d.} \\}
 \newcommand{\qedbox}{\hfill $\Box$}
