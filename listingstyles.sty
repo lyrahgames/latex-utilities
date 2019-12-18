@@ -53,7 +53,7 @@
 \newlistof{code}{codelist}{\listofcodecall}
 \newcounter{codecounter}[section]
 \newcommand*{\codenumber}{\thesection.\arabic{codecounter}}
-\renewcommand{\thecode}{\codenumber}
+\renewcommand{\thecodecounter}{\codenumber}
 
 \newcommand{\inputCodeBlock}[2][]{%
   \pgfkeys{%
@@ -61,6 +61,7 @@
     listing,
     type/.initial = Code,
     title/.initial =,
+    % label/.initial =,
     style/.initial = standard,
     language/.initial = c++,
     #1
@@ -68,6 +69,7 @@
   %
   \refstepcounter{codecounter}%
   \addcontentsline{codelist}{figure}{\protect{\numberline{\codenumber}\pgfkeysvalueof{/listing/title}}}%
+  % \pgfkeysvalueof{/listing/label}%
   %
   \begin{center}
     \begin{tcolorbox}[%
