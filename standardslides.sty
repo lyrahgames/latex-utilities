@@ -48,11 +48,30 @@
 % \RequirePackage[hang,footnotesize]{caption}
 % \RequirePackage[font=footnotesize]{subcaption}
 
-\RequirePackage[square,sort,comma,numbers]{natbib}
+\RequirePackage[autostyle,german=guillemets,english=american]{csquotes}
+% \RequirePackage[backend=bibtex,bibstyle=musuos,citestyle=authoryear]{biblatex}
+
+% Slides need shorter and cleares citatitons. Hence, use numeric style.
+% Furthermore, using other styles, introduces strange problems.
+\RequirePackage[backend=bibtex,style=numeric,dateabbrev=false,sorting=none]{biblatex}
+
+% \RequirePackage{tocbibind}
 \RequirePackage{url}
-\RequirePackage{babelbib}
-\RequirePackage[autostyle,german=guillemets]{csquotes}
-\bibliographystyle{babplain}
+\urlstyle{same}
+% \RequirePackage[pdfusetitle]{hyperref}
+% \RequirePackage{hyperref}
+% \hypersetup{
+%   colorlinks,
+%   linkcolor={blue!70!black},
+%   citecolor={blue!70!black},
+%   urlcolor={blue!70!black}
+% }
+
+% \RequirePackage[square,sort,comma,numbers]{natbib}
+% \RequirePackage{url}
+% \RequirePackage{babelbib}
+% \RequirePackage[autostyle,german=guillemets]{csquotes}
+% \bibliographystyle{babplain}
 
 \RequirePackage{multicol}
 
