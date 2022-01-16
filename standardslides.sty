@@ -86,8 +86,11 @@
   \end{beamercolorbox}
 }
 
+\newcounter{backupcounter}
+
 \AtBeginSection[]{
-  \begin{frame}
+  \setcounter{backupcounter}{\value{framenumber}}
+  \begin{frame}[plain]
     \vfill
     \centering
     \begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
@@ -95,6 +98,7 @@
     \end{beamercolorbox}
     \vfill
   \end{frame}
+  \setcounter{framenumber}{\value{backupcounter}}
 }
 
 \endinput
