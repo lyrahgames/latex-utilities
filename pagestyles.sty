@@ -9,7 +9,7 @@
   % \fancyfoot[C]{\footnotesize\bigskip\thepage/\pageref{LastPage}}
   % \fancyfoot{}
   \fancyfoot[C]{\footnotesize\bigskip\thepage}
-  \fancyfoot[R]{\footnotesize\bigskip\copyright\ Markus Pawellek, \today}
+  % \fancyfoot[R]{\footnotesize\bigskip\copyright\ Markus Pawellek, \today}
   \renewcommand{\footrulewidth}{0.5pt}
   \renewcommand{\headrulewidth}{0pt}
 }
@@ -17,12 +17,14 @@
 \fancypagestyle{mainstyle}{
   \fancyhf{}
   \fancyfoot[C]{\footnotesize\bigskip\thepage}
-  \fancyfoot[R]{\footnotesize\bigskip\copyright\ Markus Pawellek, \today}
+  % \fancyfoot[R]{\footnotesize\bigskip\copyright\ Markus Pawellek, \today}
   % \fancyhead[LO,RE]{\footnotesize \thetitle} %left
   % \fancyhead[RO,LE]{\footnotesize \theauthor} %right
   % \fancyhead[LO,RE]{\footnotesize \ \smallskip}
-  \fancyhead[RO]{\footnotesize \@title \smallskip} %right
-  \fancyhead[LE]{\footnotesize \@title \smallskip} %right
+  % \fancyhead[RO]{\footnotesize \@title \smallskip} %right
+  % \fancyhead[LE]{\footnotesize \@title \smallskip} %right
+  \fancyhead[RO]{\footnotesize \rightmark \smallskip} %right
+  \fancyhead[LE]{\footnotesize \leftmark \smallskip} %right
   \renewcommand{\headrulewidth}{0.5pt}
   \renewcommand{\footrulewidth}{0.5pt}
 }
